@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t sambandham/react-test -f ./client/Dockerfile.dev ./client
+script:
+  - docker run sambandham/react-test npm test -- -- coverage
+after_success:
+  - docker build -t sambandham/multi-client ./client
+  - docker build -t sambandham/multi-nginx ./nginx
+  - docker build -t sambandham/multi-server ./server
+  - docker build -t sambandham/multi-worker ./worker
+  #credentials
+  - echo "DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #push the images to docker hub
+  - docker push sambandham/multi-client
+  - docker push sambandham/multi-nginx
+  - docker push sambandham/multi-server
+  - docker push sambandham/multi-worker
+
