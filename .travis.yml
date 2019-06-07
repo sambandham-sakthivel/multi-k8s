@@ -4,7 +4,7 @@ services:
 before_install:
   - docker build -t sambandham/react-test -f ./client/Dockerfile.dev ./client
 script:
-  - docker run sambandham/react-test npm test -- -- coverage
+  - docker run sambandham/react-test npm test -- --coverage
 after_success:
   - docker build -t sambandham/multi-client ./client
   - docker build -t sambandham/multi-nginx ./nginx
