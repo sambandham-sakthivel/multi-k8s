@@ -11,7 +11,7 @@ after_success:
   - docker build -t sambandham/multi-server ./server
   - docker build -t sambandham/multi-worker ./worker
   #credentials
-  - echo "DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   #push the images to docker hub
   - docker push sambandham/multi-client
   - docker push sambandham/multi-nginx
